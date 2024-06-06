@@ -19,6 +19,13 @@ pipeline {
                 }
             }
         }
+        stage('run django server'){
+            steps{
+                script{
+                    echo "running server"
+                }
+            }
+        }
     }
 
     post {
