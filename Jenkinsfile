@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        TARGET_DIR = "/home/django_server/"
+        TARGET_DIR = "/home/jenkins/django_server/"
     }
 
     stages {
