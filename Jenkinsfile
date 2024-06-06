@@ -2,12 +2,30 @@ pipeline {
     agent any
 
     stages {
+
+        environment {
+            TARGET_DIR = "/etc/djano_server/" 
+        }
         stage('checkout github') {
             steps {
-
-                git branch: 'maser',
-                credentialsId: 'github-acctoken',
-                url: 'https://github.com/luka-akhaladze/mana'
+                 script {
+                    // Clone the repository
+                    sh """
+                    if [ -d "${env.TARGET_DIR}" ]; then
+                        echo "Directory exists. Removing it."
+                        rm -rf ${env.TARGET_DIR}
+                    fi
+                    git clone https://github.com/username/repo.git ${env.TARGET_DIR}
+                    """
+                }
+            post {
+                success {
+                    echo "great success ${env.TARGET_DIR}"
+                }
+                failure {
+                    echo "fail"
+                }
+            }
             }
         }
 
