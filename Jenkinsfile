@@ -2,20 +2,19 @@ pipeline {
     agent any
 
     environment {
-        TARGET_DIR = "/etc/django_server/" // Set your target directory here
+        TARGET_DIR = "/etc/django_server/"
     }
 
     stages {
         stage('checkout github') {
             steps {
                 script {
-                    // Clone the repository
                     sh """
                     if [ -d "${env.TARGET_DIR}" ]; then
                         echo "Directory exists. Removing it."
                         rm -rf ${env.TARGET_DIR}
                     fi
-                    git clone https://github.com/username/repo.git ${env.TARGET_DIR}
+                    git clone https://github.com/luka-akhaladze/mana.git ${env.TARGET_DIR}
                     """
                 }
             }
