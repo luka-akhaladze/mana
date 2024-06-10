@@ -48,7 +48,7 @@ pipeline {
         stage('Start server') {
             steps {
                 sh '''
-                cd ${TARGET_DIR}
+                cd ${TARGET_DIR}/myproject
                 bash -c "source ${VENV_DIR}/bin/activate && python manage.py runserver 0.0.0.0:8000 &"
                 '''
             }
