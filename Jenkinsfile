@@ -41,7 +41,7 @@ pipeline {
             }
             steps {
                 sh '''
-                bash -c "source ${VENV_DIR}/bin/activate && pip install django"
+                bash -c "pip install django"
                 '''
             }
         }
@@ -49,7 +49,7 @@ pipeline {
             steps {
                 sh '''
                 cd ${TARGET_DIR}myproject
-                bash -c "source ${VENV_DIR}/bin/activate && nohup python manage.py runserver 0.0.0.0:8000 >> server.log 2>&1 &"
+                bash -c "python manage.py runserver 0.0.0.0:8000 >> server.log 2>&1 &"
                 '''
             }
         }
