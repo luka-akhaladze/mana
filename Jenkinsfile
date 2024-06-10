@@ -1,7 +1,7 @@
 pipeline {
     agent any
     parameters {
-        booleanParam defaultValue: false, description: 'to not install', name: 'isInstalled'
+        booleanParam defaultValue: true, description: 'to not install', name: 'isInstalled'
     }
 
 
@@ -49,7 +49,7 @@ pipeline {
             steps {
                 sh '''
                 cd ${TARGET_DIR}myproject
-                bash -c "nohup python manage.py runserver 0.0.0.0:8000 > server.log 2>&1 &"
+                nohup python manage.py runserver 0.0.0.0:8000 > server.log 2>&1 &
                 '''
             }
         }
