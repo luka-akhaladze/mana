@@ -41,7 +41,7 @@ pipeline {
             }
             steps {
                 sh '''
-                bash -c "pip install django"
+                bash -c "sudo apt install python3-django"
                 '''
             }
         }
@@ -49,7 +49,7 @@ pipeline {
             steps {
                 sh '''
                 cd ${TARGET_DIR}myproject
-                bash -c "python manage.py runserver 0.0.0.0:8000 >> server.log 2>&1 &"
+                bash -c "python3 manage.py runserver 0.0.0.0:8000 >> server.log 2>&1 &"
                 '''
             }
         }
