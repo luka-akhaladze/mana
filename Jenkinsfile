@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    parameters {
+        booleanParam defaultValue: false, description: 'to not install', name: 'isInstalled'
+    }
+
 
     environment {
         TARGET_DIR = "/home/jenkins/django_server/"
@@ -22,20 +26,26 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 sh '''
-                cd /home/jenkins/django_server
+                cd /home/jenkins/django_server/
+                python3 -m venv myenv
                 source myenv/bin/activate
-                pip install -r requirements.txt
-                EOF
                 '''
             }
         }
-        stage('Start Gunicorn') {
+        stage('install django if its not'){
+            when{
+                expression {
+                    return params.isInstalled == false
+                }
+            }
+            steps{
+                sh "pip install django"
+            }
+        }
+        stage('Start server') {
             steps {
                 sh '''
-                cd /home/jenkins/django_server
-                source myenv/bin/activate
-                gunicorn --workers 3 --bind 0.0.0.0:8000 your_project_name.wsgi:application
-                EOF
+                python manage.py runserver
                 '''
             }
         }
