@@ -41,7 +41,7 @@ pipeline {
             }
             steps {
                 sh '''
-                bash -c "sudo apt install python3-django"    
+                bash -c "pip install django"
                 '''
             }
         }
