@@ -19,11 +19,24 @@ pipeline {
                 }
             }
         }
-        stage('run django server'){
-            steps{
-                script{
-                    echo "running server"
-                }
+        stage('Install Dependencies') {
+            steps {
+                sh '''
+                cd /home/jenkins/django_server
+                source myenv/bin/activate
+                pip install -r requirements.txt
+                EOF
+                '''
+            }
+        }
+        stage('Start Gunicorn') {
+            steps {
+                sh '''
+                cd /home/jenkins/django_server
+                source myenv/bin/activate
+                gunicorn --workers 3 --bind 0.0.0.0:8000 your_project_name.wsgi:application
+                EOF
+                '''
             }
         }
     }
