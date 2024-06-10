@@ -48,8 +48,8 @@ pipeline {
         stage('Start Server') {
             steps {
                 sh '''
-                cd ${TARGET_DIR}
-                bash -c "source ${VENV_DIR}/bin/activate && nohup python manage.py runserver 0.0.0.0:8000 > server.log 2>&1 &"
+                cd ${TARGET_DIR}/myproject
+                bash -c "source ${VENV_DIR}/bin/activate && nohup python manage.py runserver 0.0.0.0:8000 >> server.log 2>&1 &"
                 '''
             }
         }
