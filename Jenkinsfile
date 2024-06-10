@@ -24,15 +24,15 @@ pipeline {
                 }
             }
         }
-        stage('Install Dependencies') {
-            steps {
-                sh '''
-                cd ${TARGET_DIR}
-                python3 -m venv ${VENV_DIR}
-                bash -c "source ${VENV_DIR}/bin/activate "
-                '''
-            }
-        }
+        // stage('Install Dependencies') {
+        //     steps {
+        //         sh '''
+        //         cd ${TARGET_DIR}
+        //         python3 -m venv ${VENV_DIR}
+        //         bash -c "source ${VENV_DIR}/bin/activate "
+        //         '''
+        //     }
+        // }
         stage('Install Django if not installed') {
             when {
                 expression {
@@ -49,7 +49,7 @@ pipeline {
             steps {
                 sh '''
                 cd ${TARGET_DIR}myproject
-                bash -c "python3 manage.py runserver 0.0.0.0:8000 >> server.log 2>&1 &"
+                bash -c "nohup python manage.py runserver 0.0.0.0:8000 > server.log 2>&1 &"
                 '''
             }
         }
