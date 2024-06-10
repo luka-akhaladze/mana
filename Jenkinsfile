@@ -7,6 +7,7 @@ pipeline {
 
     environment {
         TARGET_DIR = "/home/jenkins/django_server/"
+        VENV_DIR = "${env.TARGET_DIR}myenv"
     }
 
     stages {
@@ -26,32 +27,34 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 sh '''
-                cd /home/jenkins/django_server/
-                python3 -m venv myenv
-                source myenv/bin/activate
+                cd ${TARGET_DIR}
+                python3 -m venv ${VENV_DIR}
+                bash -c "source ${VENV_DIR}/bin/activate && pip install -r requirements.txt"
                 '''
             }
         }
-        stage('install django if its not'){
-            when{
+        stage('Install Django if not installed') {
+            when {
                 expression {
                     return params.isInstalled == false
                 }
             }
-            steps{
-                sh "pip install django"
+            steps {
+                sh '''
+                bash -c "source ${VENV_DIR}/bin/activate && pip install django"
+                '''
             }
         }
         stage('Start server') {
             steps {
                 sh '''
-                cd myproject
-                python manage.py runserver
+                cd ${TARGET_DIR}
+                bash -c "source ${VENV_DIR}/bin/activate && python manage.py runserver 0.0.0.0:8000 &"
                 '''
             }
         }
-    }
 
+    }
     post {
         success {
             echo "great success ${env.TARGET_DIR}"
