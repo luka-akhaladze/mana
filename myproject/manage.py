@@ -16,7 +16,7 @@ def main():
             "forget to activate a virtual environment?"
         ) from exc
     execute_from_command_line(sys.argv)
-    print('suup')
+    print('testing buildtrigger')
 
 
 if __name__ == '__main__':
