@@ -45,14 +45,14 @@ pipeline {
                 '''
             }
         }
-        stage('Start Server') {
+        stage('Restart Django Service') {
             steps {
                 sh '''
-                cd ${TARGET_DIR}myproject
-                python3 manage.py runserver 0.0.0.0:8000 > server.log 2>&1 &
+                sudo systemctl restart django_server.service
                 '''
             }
         }
+
     }
     post {
         success {
