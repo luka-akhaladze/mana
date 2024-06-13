@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent { lable 'linux' }
     parameters {
         booleanParam defaultValue: true, description: 'to not install', name: 'isInstalled'
     }
